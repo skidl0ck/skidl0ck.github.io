@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name — Frontend Developer</title>
+<meta name="description" content="Frontend developer portfolio — Next.js, TypeScript, Tailwind. Case study: Sikaty, a full freelance marketplace platform.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14171c;
+    --paper:#f7f7f4;
+    --paper-dim:#efeee9;
+    --white:#ffffff;
+    --line:#e2e1db;
+    --muted:#6b7280;
+    --accent:#2f6fed;
+    --accent-soft:#e9f0ff;
+    --amber:#e8a33d;
+    --amber-soft:#fbf1de;
+    --shipped:#1f9d55;
+    --radius:10px;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --maxw:1120px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+
+  h1,h2,h3{font-family:var(--font-display); margin:0; letter-spacing:-0.01em;}
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:7px; height:7px; border-radius:50%;
+    background:var(--accent);
+    display:inline-block;
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(247,247,244,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .nav-logo{
+    font-family:var(--font-mono);
+    font-weight:500;
+    font-size:15px;
+  }
+  .nav-logo span{color:var(--accent);}
+  .nav-links{
+    display:flex; gap:28px; list-style:none; margin:0; padding:0;
+    font-size:14.5px;
+  }
+  .nav-links a{
+    text-decoration:none; color:var(--ink); opacity:0.75;
+    padding:6px 0; border-bottom:2px solid transparent;
+    transition:opacity .15s ease, border-color .15s ease;
+  }
+  .nav-links a:hover{opacity:1; border-color:var(--accent);}
+  .nav-cta{
+    font-family:var(--font-mono);
+    font-size:13px;
+    text-decoration:none;
+    background:var(--ink);
+    color:var(--paper) !important;
+    padding:9px 16px;
+    border-radius:7px;
+    opacity:1 !important;
+    border:none !important;
+  }
+  .nav-toggle{display:none; background:none; border:none; cursor:pointer; padding:6px;}
+  .nav-toggle span{display:block; width:22px; height:2px; background:var(--ink); margin:5px 0;}
+
+  @media (max-width:760px){
+    .nav-links{
+      position:absolute; top:64px; left:0; right:0;
+      background:var(--paper); border-bottom:1px solid var(--line);
+      flex-direction:column; padding:16px 28px; gap:16px;
+      display:none;
+    }
+    .nav-links.open{display:flex;}
+    .nav-toggle{display:block;}
+    .nav-cta{display:none;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{padding:96px 0 72px; border-bottom:1px solid var(--line);}
+  .hero-grid{display:grid; grid-template-columns:1.15fr 0.85fr; gap:56px; align-items:center;}
+  @media (max-width:860px){.hero-grid{grid-template-columns:1fr;}}
+
+  .hero h1{
+    font-size:clamp(34px, 5vw, 54px);
+    line-height:1.08;
+    font-weight:600;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--accent);
+  }
+  .hero p.lede{
+    font-size:18px; color:var(--muted); max-width:52ch; margin-top:20px;
+  }
+  .hero-actions{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--font-mono);
+    font-size:13.5px;
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:7px;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .btn-primary{background:var(--ink); color:var(--paper);}
+  .btn-primary:hover{transform:translateY(-1px); background:#000;}
+  .btn-ghost{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--ink);}
+
+  .hero-tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:36px;}
+  .tag{
+    font-family:var(--font-mono); font-size:12px;
+    border:1px solid var(--line); background:var(--white);
+    padding:5px 10px; border-radius:6px; color:var(--muted);
+  }
+
+  /* card mock on the right */
+  .hero-card{
+    background:var(--white); border:1px solid var(--line); border-radius:14px;
+    padding:22px; box-shadow:0 24px 48px -28px rgba(20,23,28,0.28);
+  }
+  .hero-card-head{display:flex; align-items:center; gap:8px; margin-bottom:16px;}
+  .hero-card-dot{width:9px; height:9px; border-radius:50%;}
+  .hero-card-dot:nth-child(1){background:#e8564f;}
+  .hero-card-dot:nth-child(2){background:#e8a33d;}
+  .hero-card-dot:nth-child(3){background:#1f9d55;}
+  .hero-card-title{
+    font-family:var(--font-mono); font-size:12px; color:var(--muted); margin-left:6px;
+  }
+  .hero-card pre{
+    margin:0; font-family:var(--font-mono); font-size:12.5px; line-height:1.75;
+    color:var(--ink); overflow-x:auto;
+  }
+  .hero-card .c1{color:var(--accent);}
+  .hero-card .c2{color:var(--amber);}
+  .hero-card .c3{color:var(--shipped);}
+  .hero-card .cm{color:var(--muted);}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:88px 0;}
+  .section-head{max-width:640px; margin-bottom:48px;}
+  .section-head h2{font-size:clamp(26px,3.4vw,36px); font-weight:600;}
+  .section-head p{color:var(--muted); font-size:16px; margin-top:12px;}
+
+  /* ---------- STACK / ARCHITECTURE ---------- */
+  .stack{background:var(--paper-dim); border-bottom:1px solid var(--line);}
+
+  .stack-groups{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:56px;}
+  @media (max-width:760px){.stack-groups{grid-template-columns:1fr;}}
+  .stack-group{
+    background:var(--white); border:1px solid var(--line); border-radius:12px; padding:22px;
+  }
+  .stack-group h3{font-size:15px; font-weight:600; margin-bottom:4px;}
+  .stack-group .role{
+    font-family:var(--font-mono); font-size:11px; color:var(--accent); text-transform:uppercase; letter-spacing:0.05em;
+  }
+  .stack-group ul{list-style:none; margin:16px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:8px;}
+  .stack-group li{
+    font-family:var(--font-mono); font-size:12.5px; background:var(--paper-dim);
+    padding:5px 10px; border-radius:6px; color:var(--ink);
+  }
+
+  /* architecture diagram */
+  .diagram{
+    background:var(--white); border:1px solid var(--line); border-radius:14px; padding:36px 28px;
+  }
+  .diagram-head{display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap; margin-bottom:28px;}
+  .diagram-head h3{font-size:17px; font-weight:600;}
+  .diagram-head p{color:var(--muted); font-size:14px; margin:6px 0 0; max-width:46ch;}
+  .legend{display:flex; gap:16px; font-family:var(--font-mono); font-size:11.5px; color:var(--muted);}
+  .legend span{display:flex; align-items:center; gap:6px;}
+  .legend i{width:10px; height:10px; border-radius:3px; display:inline-block;}
+  .legend .l-built i{background:var(--accent);}
+  .legend .l-support i{background:var(--line); border:1px solid #cfceC7;}
+
+  .diagram-row{
+    display:flex; align-items:stretch; gap:0; overflow-x:auto; padding-bottom:8px;
+  }
+  .node{
+    flex:1 1 0; min-width:150px;
+    border:1.5px solid var(--line); border-radius:10px; padding:16px 14px;
+    background:var(--paper); cursor:pointer; text-align:left;
+    font-family:var(--font-body);
+    transition:border-color .15s ease, background .15s ease, transform .15s ease;
+    margin-right:20px; position:relative;
+  }
+  .node:last-child{margin-right:0;}
+  .node::after{
+    content:'→';
+    position:absolute; right:-19px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-size:14px;
+  }
+  .node:last-child::after{display:none;}
+  .node.built{border-color:var(--accent); background:var(--accent-soft);}
+  .node:hover{transform:translateY(-2px);}
+  .node.active{border-color:var(--ink); box-shadow:0 8px 20px -12px rgba(20,23,28,0.4);}
+  .node .n-label{
+    font-family:var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted);
+    margin-bottom:6px; display:block;
+  }
+  .node.built .n-label{color:var(--accent);}
+  .node .n-title{font-weight:600; font-size:14.5px;}
+
+  .diagram-detail{
+    margin-top:22px; padding:18px 20px; background:var(--paper-dim); border-radius:10px;
+    font-size:14.5px; color:var(--ink); min-height:26px;
+  }
+  .diagram-detail b{font-family:var(--font-mono); font-weight:500; color:var(--accent); margin-right:6px;}
+
+  @media (max-width:760px){
+    .diagram-row{flex-direction:column;}
+    .node{margin-right:0; margin-bottom:20px;}
+    .node::after{content:'↓'; right:50%; top:auto; bottom:-18px; transform:translateX(50%);}
+    .node:last-child{margin-bottom:0;}
+  }
+
+  /* ---------- WORK / CASE STUDY ---------- */
+  .case{border-bottom:1px solid var(--line);}
+  .case-top{
+    display:grid; grid-template-columns:1fr auto; gap:24px; align-items:flex-end; margin-bottom:36px;
+  }
+  @media (max-width:640px){.case-top{grid-template-columns:1fr;}}
+  .case-top h2{font-size:clamp(26px,4vw,40px); font-weight:600;}
+  .case-top .role-line{font-family:var(--font-mono); font-size:13px; color:var(--muted); margin-top:10px;}
+  .status-chip{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--shipped);
+    background:#eaf8ef; border:1px solid #cdeed9; padding:6px 12px; border-radius:20px;
+    display:inline-flex; align-items:center; gap:6px; white-space:nowrap; height:fit-content;
+  }
+  .status-chip i{width:7px; height:7px; border-radius:50%; background:var(--shipped);}
+
+  .case-summary{font-size:17px; color:var(--ink); max-width:74ch; margin-bottom:40px;}
+  .case-summary strong{color:var(--accent);}
+
+  .feature-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:44px;
+  }
+  @media (max-width:860px){.feature-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.feature-grid{grid-template-columns:1fr;}}
+  .feature{
+    border:1px solid var(--line); border-radius:12px; padding:20px; background:var(--white);
+  }
+  .feature h4{font-size:14.5px; font-weight:600; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
+  .feature h4 i{width:6px; height:6px; border-radius:50%; background:var(--accent); display:inline-block;}
+  .feature p{font-size:13.5px; color:var(--muted); margin:0;}
+
+  .pill-row{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:44px;}
+  .pill{
+    font-family:var(--font-mono); font-size:12px; padding:6px 12px; border-radius:20px;
+    background:var(--ink); color:var(--paper);
+  }
+
+  .case-links{display:flex; gap:14px; flex-wrap:wrap;}
+
+  /* placeholder projects */
+  .more-projects{margin-top:60px;}
+  .more-projects h3{font-size:18px; margin-bottom:18px; font-weight:600;}
+  .placeholder-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+  @media (max-width:640px){.placeholder-grid{grid-template-columns:1fr;}}
+  .placeholder-card{
+    border:1.5px dashed var(--line); border-radius:12px; padding:26px;
+    color:var(--muted); font-size:13.5px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; min-height:120px;
+  }
+  .placeholder-card span{font-family:var(--font-mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.05em;}
+
+  /* ---------- ABOUT ---------- */
+  .about{background:var(--paper-dim); border-bottom:1px solid var(--line);}
+  .about-grid{display:grid; grid-template-columns:0.8fr 1.2fr; gap:56px; align-items:start;}
+  @media (max-width:760px){.about-grid{grid-template-columns:1fr;}}
+  .about-photo{
+    aspect-ratio:1; background:var(--white); border:1px solid var(--line); border-radius:14px;
+    display:flex; align-items:center; justify-content:center; color:var(--muted);
+    font-family:var(--font-mono); font-size:12px; text-align:center; padding:20px;
+  }
+  .about-text p{font-size:16.5px; color:var(--ink); margin:0 0 16px;}
+  .about-text p:last-child{margin-bottom:0;}
+  .about-facts{display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:28px;}
+  .fact{background:var(--white); border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
+  .fact .k{font-family:var(--font-mono); font-size:11px; color:var(--accent); text-transform:uppercase; letter-spacing:0.05em;}
+  .fact .v{font-size:14.5px; margin-top:4px; font-weight:500;}
+
+  /* ---------- CONTACT ---------- */
+  .contact{text-align:center;}
+  .contact .section-head{margin:0 auto 40px; text-align:center;}
+  .contact-actions{display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-bottom:40px;}
+  .contact-links{
+    display:flex; justify-content:center; gap:28px; flex-wrap:wrap;
+    font-family:var(--font-mono); font-size:14px;
+  }
+  .contact-links a{text-decoration:none; opacity:0.7; transition:opacity .15s ease;}
+  .contact-links a:hover{opacity:1; text-decoration:underline;}
+
+  footer{
+    border-top:1px solid var(--line); padding:28px 0; text-align:center;
+    font-family:var(--font-mono); font-size:12px; color:var(--muted);
+  }
+
+  /* reveal on scroll */
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .55s ease, transform .55s ease;}
+  .reveal.visible{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <div class="nav-logo">your<span>.dev</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav-cta" href="#contact">Get in touch</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Frontend Developer</div>
+      <h1>I build interfaces that hold up under <em>real production traffic.</em></h1>
+      <p class="lede">Next.js, TypeScript, and Tailwind, wired into real backends — real-time chat, checkout flows, multi-step wizards. Currently open to frontend roles.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#work">View case study</a>
+        <a class="btn btn-ghost" href="#" id="resumeLink"><!-- link your resume PDF here -->Download résumé</a>
+      </div>
+      <div class="hero-tags">
+        <span class="tag">Next.js (App Router)</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">Tailwind CSS</span>
+        <span class="tag">React Query</span>
+        <span class="tag">WebSockets</span>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-head">
+        <div class="hero-card-dot"></div><div class="hero-card-dot"></div><div class="hero-card-dot"></div>
+        <span class="hero-card-title">seller-profile-wizard.tsx</span>
+      </div>
+      <pre><span class="cm">// multi-step form, validated per step</span>
+<span class="c1">export function</span> SellerProfileWizard() {
+  <span class="c1">const</span> [step, setStep] = useState(0)
+  <span class="c1">const</span> { isDirty } = useUnsavedChanges()
+
+  <span class="cm">// profile strength recalculated live</span>
+  <span class="c1">const</span> strength = useProfileStrength(data)
+
+  <span class="c2">return</span> (
+    &lt;Wizard step={step} strength={strength}&gt;
+      ...
+    &lt;/Wizard&gt;
+  )
+}
+<span class="c3">// ✓ shipped to production</span></pre>
+    </div>
+  </div>
+</header>
+
+<section class="stack" id="stack">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Stack</div>
+      <h2>What I actually shipped with</h2>
+      <p>Grouped by where each tool sits in the day-to-day — from what renders in the browser, to the systems it talks to.</p>
+    </div>
+
+    <div class="stack-groups reveal">
+      <div class="stack-group">
+        <div class="role">Core</div>
+        <h3>Frontend</h3>
+        <ul>
+          <li>Next.js (App Router)</li>
+          <li>TypeScript</li>
+          <li>Tailwind CSS</li>
+          <li>React Query</li>
+        </ul>
+      </div>
+      <div class="stack-group">
+        <div class="role">Real-time</div>
+        <h3>Live features</h3>
+        <ul>
+          <li>WebSocket clients</li>
+          <li>Django Channels</li>
+          <li>Dual-channel sync</li>
+        </ul>
+      </div>
+      <div class="stack-group">
+        <div class="role">Commerce</div>
+        <h3>Payments UI</h3>
+        <ul>
+          <li>Stripe Elements</li>
+          <li>PayPal Checkout</li>
+          <li>Session-based flows</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="diagram reveal">
+      <div class="diagram-head">
+        <div>
+          <h3>Where the frontend sits</h3>
+          <p>Sikaty's full architecture, with the parts I built highlighted. Click a node for what it does.</p>
+        </div>
+        <div class="legend">
+          <span class="l-built"><i></i>Built by me</span>
+          <span class="l-support"><i></i>Backend context</span>
+        </div>
+      </div>
+
+      <div class="diagram-row" id="diagramRow">
+        <button class="node built" data-detail="The client: Next.js pages and components, React Query for data fetching, Tailwind for styling. Everything the user actually sees and clicks.">
+          <span class="n-label">01 · Client</span>
+          <span class="n-title">Next.js Frontend</span>
+        </button>
+        <button class="node built" data-detail="WebSocket clients feeding the inbox and active chat views, plus the dual-channel logic that keeps notifications and open conversations in sync.">
+          <span class="n-label">02 · Live</span>
+          <span class="n-title">Realtime UI Layer</span>
+        </button>
+        <button class="node" data-detail="Django Channels handles the WebSocket connections server-side and routes messages to the right channel group.">
+          <span class="n-label">03 · Server</span>
+          <span class="n-title">Django Channels</span>
+        </button>
+        <button class="node" data-detail="Django REST Framework serves gigs, orders, profiles, and auth — the API surface the frontend consumes.">
+          <span class="n-label">04 · Server</span>
+          <span class="n-title">Django REST API</span>
+        </button>
+        <button class="node built" data-detail="Stripe Elements and PayPal Checkout embedded in the client, driving the subscription and custom-offer checkout flows end to end.">
+          <span class="n-label">05 · Client</span>
+          <span class="n-title">Checkout UI</span>
+        </button>
+      </div>
+      <div class="diagram-detail" id="diagramDetail"><b>01·Client</b>The client: Next.js pages and components, React Query for data fetching, Tailwind for styling. Everything the user actually sees and clicks.</div>
+    </div>
+  </div>
+</section>
+
+<section class="case" id="work">
+  <div class="wrap">
+    <div class="case-top reveal">
+      <div>
+        <div class="eyebrow">Featured work</div>
+        <h2>Sikaty</h2>
+        <div class="role-line">Freelance marketplace · UK-registered · Primary frontend developer</div>
+      </div>
+      <span class="status-chip"><i></i>In production</span>
+    </div>
+
+    <p class="case-summary reveal">
+      Sikaty is a two-sided freelance marketplace — buyers post work, sellers deliver it, and the whole relationship runs through the platform: discovery, real-time messaging, orders, and payment. I built the <strong>entire client-side application</strong>, then wired it into a Django backend I also worked on — from the first Bootstrap-to-Next.js migration through to the subscription checkout flow live today.
+    </p>
+
+    <div class="feature-grid reveal">
+      <div class="feature">
+        <h4><i></i>Design system</h4>
+        <p>Custom typography, color, and motion language applied consistently across every page — landing, blog, category browsing, help center.</p>
+      </div>
+      <div class="feature">
+        <h4><i></i>Seller onboarding</h4>
+        <p>Multi-step profile wizard with live validation, unsaved-changes tracking, and a profile-strength score that updates as sellers fill it in.</p>
+      </div>
+      <div class="feature">
+        <h4><i></i>Real-time chat</h4>
+        <p>WebSocket-driven inbox and chat with a dual-channel design — one channel for notifications, one for the open conversation — plus mobile bottom-sheet UI.</p>
+      </div>
+      <div class="feature">
+        <h4><i></i>Order management</h4>
+        <p>Migrated the full order flow off Bootstrap: feed, details, requirements, and deliveries, each rendered differently for buyer vs. seller.</p>
+      </div>
+      <div class="feature">
+        <h4><i></i>Checkout &amp; subscriptions</h4>
+        <p>Stripe Elements and PayPal wired into a session-based checkout, covering both one-off custom offers and recurring subscription plans.</p>
+      </div>
+      <div class="feature">
+        <h4><i></i>Search &amp; discovery</h4>
+        <p>Paginated gig grid with bookmarking and autocomplete search, backed by a word-tokenized Django search endpoint.</p>
+      </div>
+    </div>
+
+    <div class="pill-row reveal">
+      <span class="pill">Next.js</span>
+      <span class="pill">TypeScript</span>
+      <span class="pill">Tailwind CSS</span>
+      <span class="pill">React Query</span>
+      <span class="pill">WebSockets</span>
+      <span class="pill">Stripe</span>
+      <span class="pill">PayPal</span>
+      <span class="pill">Django REST</span>
+      <span class="pill">Django Channels</span>
+    </div>
+
+    <div class="case-links reveal">
+      <a class="btn btn-ghost" href="#"><!-- link live site --> Live site ↗</a>
+      <a class="btn btn-ghost" href="#"><!-- link repo --> Source ↗</a>
+    </div>
+
+    <div class="more-projects reveal">
+      <h3>More projects</h3>
+      <div class="placeholder-grid">
+        <div class="placeholder-card">
+          <span>Coming soon</span>
+          Space reserved for the next case study.
+        </div>
+        <div class="placeholder-card">
+          <span>Coming soon</span>
+          Space reserved for the next case study.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="reveal">
+      <div class="about-photo"><!-- swap for a real photo --> Your photo here</div>
+    </div>
+    <div class="reveal">
+      <div class="eyebrow">About</div>
+      <div class="about-text">
+        <p>I'm a frontend developer who's spent the last stretch building one product end to end rather than a portfolio of small demos — which means I've had to own the parts that don't show up in a component library: state that has to survive a page refresh, checkout flows that can't silently fail, chat that has to stay in sync across two WebSocket channels.</p>
+        <p>I like working close to the backend, not because I want to be a backend developer, but because the best frontend decisions come from understanding what the API can and can't promise you.</p>
+      </div>
+      <div class="about-facts">
+        <div class="fact"><div class="k">Focus</div><div class="v">Next.js · TypeScript · Tailwind</div></div>
+        <div class="fact"><div class="k">Comfortable with</div><div class="v">Django REST · WebSockets</div></div>
+        <div class="fact"><div class="k">Currently</div><div class="v">Open to frontend roles</div></div>
+        <div class="fact"><div class="k">Based in</div><div class="v"><!-- fill in --> Your location</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Contact</div>
+      <h2>Let's talk about your frontend</h2>
+      <p>Open to full-time and contract frontend roles. The fastest way to reach me is email.</p>
+    </div>
+    <div class="contact-actions reveal">
+      <a class="btn btn-primary" href="mailto:you@example.com">Email me</a>
+      <a class="btn btn-ghost" href="#" id="resumeLink2">Download résumé</a>
+    </div>
+    <div class="contact-links reveal">
+      <a href="#"><!-- GitHub --> GitHub</a>
+      <a href="#"><!-- LinkedIn --> LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© <span id="year"></span> Your Name. Built with Next.js in production — this page, plain HTML.</div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // mobile nav toggle
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+  toggle.addEventListener('click', function(){
+    links.classList.toggle('open');
+  });
+  links.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ links.classList.remove('open'); });
+  });
+
+  // architecture diagram interaction
+  var nodes = document.querySelectorAll('.node');
+  var detail = document.getElementById('diagramDetail');
+  nodes.forEach(function(node){
+    node.addEventListener('click', function(){
+      nodes.forEach(function(n){ n.classList.remove('active'); });
+      node.classList.add('active');
+      var label = node.querySelector('.n-label').textContent.replace(' · ', '·');
+      detail.innerHTML = '<b>' + label + '</b>' + node.getAttribute('data-detail');
+    });
+  });
+  if(nodes.length){ nodes[0].classList.add('active'); }
+
+  // scroll reveal
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealEls = document.querySelectorAll('.reveal');
+  if(prefersReduced || !('IntersectionObserver' in window)){
+    revealEls.forEach(function(el){ el.classList.add('visible'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+</script>
+
+</body>
+</html>
