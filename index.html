@@ -1,652 +1,288 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Name — Frontend Developer</title>
-<meta name="description" content="Frontend developer portfolio — Next.js, TypeScript, Tailwind. Case study: Sikaty, a full freelance marketplace platform.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --ink:#14171c;
-    --paper:#f7f7f4;
-    --paper-dim:#efeee9;
-    --white:#ffffff;
-    --line:#e2e1db;
-    --muted:#6b7280;
-    --accent:#2f6fed;
-    --accent-soft:#e9f0ff;
-    --amber:#e8a33d;
-    --amber-soft:#fbf1de;
-    --shipped:#1f9d55;
-    --radius:10px;
-    --font-display:'Space Grotesk', sans-serif;
-    --font-body:'Inter', sans-serif;
-    --font-mono:'JetBrains Mono', monospace;
-    --maxw:1120px;
-  }
-
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
-  }
-
-  body{
-    margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:var(--font-body);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-
-  a{color:inherit;}
-  img{max-width:100%; display:block;}
-
-  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
-
-  h1,h2,h3{font-family:var(--font-display); margin:0; letter-spacing:-0.01em;}
-
-  .eyebrow{
-    font-family:var(--font-mono);
-    font-size:12.5px;
-    letter-spacing:0.06em;
-    text-transform:uppercase;
-    color:var(--accent);
-    display:flex;
-    align-items:center;
-    gap:8px;
-    margin-bottom:14px;
-  }
-  .eyebrow::before{
-    content:'';
-    width:7px; height:7px; border-radius:50%;
-    background:var(--accent);
-    display:inline-block;
-  }
-
-  /* ---------- NAV ---------- */
-  .nav{
-    position:sticky; top:0; z-index:50;
-    background:rgba(247,247,244,0.86);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-  }
-  .nav .wrap{
-    display:flex; align-items:center; justify-content:space-between;
-    height:64px;
-  }
-  .nav-logo{
-    font-family:var(--font-mono);
-    font-weight:500;
-    font-size:15px;
-  }
-  .nav-logo span{color:var(--accent);}
-  .nav-links{
-    display:flex; gap:28px; list-style:none; margin:0; padding:0;
-    font-size:14.5px;
-  }
-  .nav-links a{
-    text-decoration:none; color:var(--ink); opacity:0.75;
-    padding:6px 0; border-bottom:2px solid transparent;
-    transition:opacity .15s ease, border-color .15s ease;
-  }
-  .nav-links a:hover{opacity:1; border-color:var(--accent);}
-  .nav-cta{
-    font-family:var(--font-mono);
-    font-size:13px;
-    text-decoration:none;
-    background:var(--ink);
-    color:var(--paper) !important;
-    padding:9px 16px;
-    border-radius:7px;
-    opacity:1 !important;
-    border:none !important;
-  }
-  .nav-toggle{display:none; background:none; border:none; cursor:pointer; padding:6px;}
-  .nav-toggle span{display:block; width:22px; height:2px; background:var(--ink); margin:5px 0;}
-
-  @media (max-width:760px){
-    .nav-links{
-      position:absolute; top:64px; left:0; right:0;
-      background:var(--paper); border-bottom:1px solid var(--line);
-      flex-direction:column; padding:16px 28px; gap:16px;
-      display:none;
-    }
-    .nav-links.open{display:flex;}
-    .nav-toggle{display:block;}
-    .nav-cta{display:none;}
-  }
-
-  /* ---------- HERO ---------- */
-  .hero{padding:96px 0 72px; border-bottom:1px solid var(--line);}
-  .hero-grid{display:grid; grid-template-columns:1.15fr 0.85fr; gap:56px; align-items:center;}
-  @media (max-width:860px){.hero-grid{grid-template-columns:1fr;}}
-
-  .hero h1{
-    font-size:clamp(34px, 5vw, 54px);
-    line-height:1.08;
-    font-weight:600;
-  }
-  .hero h1 em{
-    font-style:normal;
-    color:var(--accent);
-  }
-  .hero p.lede{
-    font-size:18px; color:var(--muted); max-width:52ch; margin-top:20px;
-  }
-  .hero-actions{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
-  .btn{
-    font-family:var(--font-mono);
-    font-size:13.5px;
-    text-decoration:none;
-    padding:12px 20px;
-    border-radius:7px;
-    display:inline-flex; align-items:center; gap:8px;
-    transition:transform .15s ease, background .15s ease;
-  }
-  .btn-primary{background:var(--ink); color:var(--paper);}
-  .btn-primary:hover{transform:translateY(-1px); background:#000;}
-  .btn-ghost{background:transparent; color:var(--ink); border:1px solid var(--line);}
-  .btn-ghost:hover{border-color:var(--ink);}
-
-  .hero-tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:36px;}
-  .tag{
-    font-family:var(--font-mono); font-size:12px;
-    border:1px solid var(--line); background:var(--white);
-    padding:5px 10px; border-radius:6px; color:var(--muted);
-  }
-
-  /* card mock on the right */
-  .hero-card{
-    background:var(--white); border:1px solid var(--line); border-radius:14px;
-    padding:22px; box-shadow:0 24px 48px -28px rgba(20,23,28,0.28);
-  }
-  .hero-card-head{display:flex; align-items:center; gap:8px; margin-bottom:16px;}
-  .hero-card-dot{width:9px; height:9px; border-radius:50%;}
-  .hero-card-dot:nth-child(1){background:#e8564f;}
-  .hero-card-dot:nth-child(2){background:#e8a33d;}
-  .hero-card-dot:nth-child(3){background:#1f9d55;}
-  .hero-card-title{
-    font-family:var(--font-mono); font-size:12px; color:var(--muted); margin-left:6px;
-  }
-  .hero-card pre{
-    margin:0; font-family:var(--font-mono); font-size:12.5px; line-height:1.75;
-    color:var(--ink); overflow-x:auto;
-  }
-  .hero-card .c1{color:var(--accent);}
-  .hero-card .c2{color:var(--amber);}
-  .hero-card .c3{color:var(--shipped);}
-  .hero-card .cm{color:var(--muted);}
-
-  /* ---------- SECTION SHELL ---------- */
-  section{padding:88px 0;}
-  .section-head{max-width:640px; margin-bottom:48px;}
-  .section-head h2{font-size:clamp(26px,3.4vw,36px); font-weight:600;}
-  .section-head p{color:var(--muted); font-size:16px; margin-top:12px;}
-
-  /* ---------- STACK / ARCHITECTURE ---------- */
-  .stack{background:var(--paper-dim); border-bottom:1px solid var(--line);}
-
-  .stack-groups{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:56px;}
-  @media (max-width:760px){.stack-groups{grid-template-columns:1fr;}}
-  .stack-group{
-    background:var(--white); border:1px solid var(--line); border-radius:12px; padding:22px;
-  }
-  .stack-group h3{font-size:15px; font-weight:600; margin-bottom:4px;}
-  .stack-group .role{
-    font-family:var(--font-mono); font-size:11px; color:var(--accent); text-transform:uppercase; letter-spacing:0.05em;
-  }
-  .stack-group ul{list-style:none; margin:16px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:8px;}
-  .stack-group li{
-    font-family:var(--font-mono); font-size:12.5px; background:var(--paper-dim);
-    padding:5px 10px; border-radius:6px; color:var(--ink);
-  }
-
-  /* architecture diagram */
-  .diagram{
-    background:var(--white); border:1px solid var(--line); border-radius:14px; padding:36px 28px;
-  }
-  .diagram-head{display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap; margin-bottom:28px;}
-  .diagram-head h3{font-size:17px; font-weight:600;}
-  .diagram-head p{color:var(--muted); font-size:14px; margin:6px 0 0; max-width:46ch;}
-  .legend{display:flex; gap:16px; font-family:var(--font-mono); font-size:11.5px; color:var(--muted);}
-  .legend span{display:flex; align-items:center; gap:6px;}
-  .legend i{width:10px; height:10px; border-radius:3px; display:inline-block;}
-  .legend .l-built i{background:var(--accent);}
-  .legend .l-support i{background:var(--line); border:1px solid #cfceC7;}
-
-  .diagram-row{
-    display:flex; align-items:stretch; gap:0; overflow-x:auto; padding-bottom:8px;
-  }
-  .node{
-    flex:1 1 0; min-width:150px;
-    border:1.5px solid var(--line); border-radius:10px; padding:16px 14px;
-    background:var(--paper); cursor:pointer; text-align:left;
-    font-family:var(--font-body);
-    transition:border-color .15s ease, background .15s ease, transform .15s ease;
-    margin-right:20px; position:relative;
-  }
-  .node:last-child{margin-right:0;}
-  .node::after{
-    content:'→';
-    position:absolute; right:-19px; top:50%; transform:translateY(-50%);
-    color:var(--muted); font-size:14px;
-  }
-  .node:last-child::after{display:none;}
-  .node.built{border-color:var(--accent); background:var(--accent-soft);}
-  .node:hover{transform:translateY(-2px);}
-  .node.active{border-color:var(--ink); box-shadow:0 8px 20px -12px rgba(20,23,28,0.4);}
-  .node .n-label{
-    font-family:var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted);
-    margin-bottom:6px; display:block;
-  }
-  .node.built .n-label{color:var(--accent);}
-  .node .n-title{font-weight:600; font-size:14.5px;}
-
-  .diagram-detail{
-    margin-top:22px; padding:18px 20px; background:var(--paper-dim); border-radius:10px;
-    font-size:14.5px; color:var(--ink); min-height:26px;
-  }
-  .diagram-detail b{font-family:var(--font-mono); font-weight:500; color:var(--accent); margin-right:6px;}
-
-  @media (max-width:760px){
-    .diagram-row{flex-direction:column;}
-    .node{margin-right:0; margin-bottom:20px;}
-    .node::after{content:'↓'; right:50%; top:auto; bottom:-18px; transform:translateX(50%);}
-    .node:last-child{margin-bottom:0;}
-  }
-
-  /* ---------- WORK / CASE STUDY ---------- */
-  .case{border-bottom:1px solid var(--line);}
-  .case-top{
-    display:grid; grid-template-columns:1fr auto; gap:24px; align-items:flex-end; margin-bottom:36px;
-  }
-  @media (max-width:640px){.case-top{grid-template-columns:1fr;}}
-  .case-top h2{font-size:clamp(26px,4vw,40px); font-weight:600;}
-  .case-top .role-line{font-family:var(--font-mono); font-size:13px; color:var(--muted); margin-top:10px;}
-  .status-chip{
-    font-family:var(--font-mono); font-size:11.5px; color:var(--shipped);
-    background:#eaf8ef; border:1px solid #cdeed9; padding:6px 12px; border-radius:20px;
-    display:inline-flex; align-items:center; gap:6px; white-space:nowrap; height:fit-content;
-  }
-  .status-chip i{width:7px; height:7px; border-radius:50%; background:var(--shipped);}
-
-  .case-summary{font-size:17px; color:var(--ink); max-width:74ch; margin-bottom:40px;}
-  .case-summary strong{color:var(--accent);}
-
-  .feature-grid{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:44px;
-  }
-  @media (max-width:860px){.feature-grid{grid-template-columns:repeat(2,1fr);}}
-  @media (max-width:560px){.feature-grid{grid-template-columns:1fr;}}
-  .feature{
-    border:1px solid var(--line); border-radius:12px; padding:20px; background:var(--white);
-  }
-  .feature h4{font-size:14.5px; font-weight:600; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
-  .feature h4 i{width:6px; height:6px; border-radius:50%; background:var(--accent); display:inline-block;}
-  .feature p{font-size:13.5px; color:var(--muted); margin:0;}
-
-  .pill-row{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:44px;}
-  .pill{
-    font-family:var(--font-mono); font-size:12px; padding:6px 12px; border-radius:20px;
-    background:var(--ink); color:var(--paper);
-  }
-
-  .case-links{display:flex; gap:14px; flex-wrap:wrap;}
-
-  /* placeholder projects */
-  .more-projects{margin-top:60px;}
-  .more-projects h3{font-size:18px; margin-bottom:18px; font-weight:600;}
-  .placeholder-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
-  @media (max-width:640px){.placeholder-grid{grid-template-columns:1fr;}}
-  .placeholder-card{
-    border:1.5px dashed var(--line); border-radius:12px; padding:26px;
-    color:var(--muted); font-size:13.5px; text-align:center;
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; min-height:120px;
-  }
-  .placeholder-card span{font-family:var(--font-mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.05em;}
-
-  /* ---------- ABOUT ---------- */
-  .about{background:var(--paper-dim); border-bottom:1px solid var(--line);}
-  .about-grid{display:grid; grid-template-columns:0.8fr 1.2fr; gap:56px; align-items:start;}
-  @media (max-width:760px){.about-grid{grid-template-columns:1fr;}}
-  .about-photo{
-    aspect-ratio:1; background:var(--white); border:1px solid var(--line); border-radius:14px;
-    display:flex; align-items:center; justify-content:center; color:var(--muted);
-    font-family:var(--font-mono); font-size:12px; text-align:center; padding:20px;
-  }
-  .about-text p{font-size:16.5px; color:var(--ink); margin:0 0 16px;}
-  .about-text p:last-child{margin-bottom:0;}
-  .about-facts{display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:28px;}
-  .fact{background:var(--white); border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
-  .fact .k{font-family:var(--font-mono); font-size:11px; color:var(--accent); text-transform:uppercase; letter-spacing:0.05em;}
-  .fact .v{font-size:14.5px; margin-top:4px; font-weight:500;}
-
-  /* ---------- CONTACT ---------- */
-  .contact{text-align:center;}
-  .contact .section-head{margin:0 auto 40px; text-align:center;}
-  .contact-actions{display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-bottom:40px;}
-  .contact-links{
-    display:flex; justify-content:center; gap:28px; flex-wrap:wrap;
-    font-family:var(--font-mono); font-size:14px;
-  }
-  .contact-links a{text-decoration:none; opacity:0.7; transition:opacity .15s ease;}
-  .contact-links a:hover{opacity:1; text-decoration:underline;}
-
-  footer{
-    border-top:1px solid var(--line); padding:28px 0; text-align:center;
-    font-family:var(--font-mono); font-size:12px; color:var(--muted);
-  }
-
-  /* reveal on scroll */
-  .reveal{opacity:0; transform:translateY(14px); transition:opacity .55s ease, transform .55s ease;}
-  .reveal.visible{opacity:1; transform:translateY(0);}
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
 </head>
 <body>
+<x-dc>
+<helmet>
+<meta name="description" content="Marben Taguinod — frontend developer. Next.js, TypeScript, Tailwind. Case study: Sikaty, a freelance marketplace in production." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;family=Work+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet" />
+<script src="./image-slot.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #F4F1EA; color: #15140F; font-family: 'Work Sans', sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #0D9488; text-decoration: none; }
+  a:hover { color: #15140F; }
+  ::selection { background: #CCFBF1; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</helmet>
 
-<nav class="nav">
-  <div class="wrap">
-    <div class="nav-logo">your<span>.dev</span></div>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#stack">Stack</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <a class="nav-cta" href="#contact">Get in touch</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
+<div style="max-width: 1040px; margin: 0 auto; padding: 0 32px 0">
+
+  <div style="position: sticky; top: 0; z-index: 40; display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 20px 0 14px; background: #F4F1EAF2; backdrop-filter: blur(8px); border-bottom: 1px solid #E3DCCF;">
+    <a href="#top" style="font-family: 'Newsreader', Georgia, serif; font-size: 21px; letter-spacing: -0.01em; color: #15140F;">Marben Taguinod</a>
+    <div style="display: flex; align-items: baseline; gap: 22px; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.02em;">
+      <a href="#work" style="color: #6E675C;">Work</a>
+      <a href="#toolkit" style="color: #6E675C;">Toolkit</a>
+      <a href="#about" style="color: #6E675C;">About</a>
+      <a href="mailto:you@example.com" style="color: #0D9488;">Email ↗</a>
+    </div>
   </div>
-</nav>
 
-<header class="hero">
-  <div class="wrap hero-grid">
+  <div id="top" style="display: grid; grid-template-columns: 1.35fr 0.65fr; gap: 56px; align-items: start; padding: 84px 0 72px;">
     <div>
-      <div class="eyebrow">Frontend Developer</div>
-      <h1>I build interfaces that hold up under <em>real production traffic.</em></h1>
-      <p class="lede">Next.js, TypeScript, and Tailwind, wired into real backends — real-time chat, checkout flows, multi-step wizards. Currently open to frontend roles.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#work">View case study</a>
-        <a class="btn btn-ghost" href="#" id="resumeLink"><!-- link your resume PDF here -->Download résumé</a>
+      <div style="display: flex; align-items: center; gap: 9px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #6E675C; margin-bottom: 26px;">
+        <span style="width: 7px; height: 7px; border-radius: 50%; background: #4E8A5B;"></span>Frontend developer · open to roles
       </div>
-      <div class="hero-tags">
-        <span class="tag">Next.js (App Router)</span>
-        <span class="tag">TypeScript</span>
-        <span class="tag">Tailwind CSS</span>
-        <span class="tag">React Query</span>
-        <span class="tag">WebSockets</span>
+      <h1 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: clamp(40px, 6.2vw, 68px); line-height: 1.04; letter-spacing: -0.015em; text-wrap: pretty;">Hi, I'm Marben. I've spent the last two years building one product <em style="font-style: italic; color: #0D9488;">all the way</em> to production.</h1>
+      <p style="margin: 26px 0 0; font-size: 18.5px; color: #57524A; max-width: 54ch; text-wrap: pretty;">Next.js, TypeScript and Tailwind, wired into real backends — real-time chat, checkout that can't silently fail, multi-step wizards that survive a refresh. Not demos: one marketplace, live, with paying users.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px;">
+        <a href="#work" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 12px 20px; border-radius: 999px; background: #15140F; color: #F4F1EA;" style-hover="background: #0D9488;">Read the case study</a>
+        <a href="#" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 12px 20px; border-radius: 999px; border: 1px solid #D6CEBF; color: #15140F;" style-hover="border-color: #15140F;">Résumé (PDF)</a>
       </div>
     </div>
-    <div class="hero-card">
-      <div class="hero-card-head">
-        <div class="hero-card-dot"></div><div class="hero-card-dot"></div><div class="hero-card-dot"></div>
-        <span class="hero-card-title">seller-profile-wizard.tsx</span>
+    <div>
+      <div style="aspect-ratio: 4 / 5; border-radius: 4px; overflow: hidden; border: 1px solid #E3DCCF;">
+        <image-slot id="portrait" shape="rect" source="/images/portrait.jpg"></image-slot>
       </div>
-      <pre><span class="cm">// multi-step form, validated per step</span>
-<span class="c1">export function</span> SellerProfileWizard() {
-  <span class="c1">const</span> [step, setStep] = useState(0)
-  <span class="c1">const</span> { isDirty } = useUnsavedChanges()
-
-  <span class="cm">// profile strength recalculated live</span>
-  <span class="c1">const</span> strength = useProfileStrength(data)
-
-  <span class="c2">return</span> (
-    &lt;Wizard step={step} strength={strength}&gt;
-      ...
-    &lt;/Wizard&gt;
-  )
-}
-<span class="c3">// ✓ shipped to production</span></pre>
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #8A8377; margin-top: 10px; line-height: 1.5;">Manila, PH · works remote<br />Replies within a day</div>
     </div>
   </div>
-</header>
 
-<section class="stack" id="stack">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">Stack</div>
-      <h2>What I actually shipped with</h2>
-      <p>Grouped by where each tool sits in the day-to-day — from what renders in the browser, to the systems it talks to.</p>
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #E3DCCF; border-top: 1px solid #E3DCCF; border-bottom: 1px solid #E3DCCF;">
+    <div style="background: #F4F1EA; padding: 22px 24px 22px 0;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8377;">Right now</div>
+      <div style="font-size: 15.5px; margin-top: 5px;">Primary frontend dev on Sikaty</div>
     </div>
-
-    <div class="stack-groups reveal">
-      <div class="stack-group">
-        <div class="role">Core</div>
-        <h3>Frontend</h3>
-        <ul>
-          <li>Next.js (App Router)</li>
-          <li>TypeScript</li>
-          <li>Tailwind CSS</li>
-          <li>React Query</li>
-        </ul>
-      </div>
-      <div class="stack-group">
-        <div class="role">Real-time</div>
-        <h3>Live features</h3>
-        <ul>
-          <li>WebSocket clients</li>
-          <li>Django Channels</li>
-          <li>Dual-channel sync</li>
-        </ul>
-      </div>
-      <div class="stack-group">
-        <div class="role">Commerce</div>
-        <h3>Payments UI</h3>
-        <ul>
-          <li>Stripe Elements</li>
-          <li>PayPal Checkout</li>
-          <li>Session-based flows</li>
-        </ul>
-      </div>
+    <div style="background: #F4F1EA; padding: 22px 24px;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8377;">Looking for</div>
+      <div style="font-size: 15.5px; margin-top: 5px;">Full-time or contract, product teams</div>
     </div>
-
-    <div class="diagram reveal">
-      <div class="diagram-head">
-        <div>
-          <h3>Where the frontend sits</h3>
-          <p>Sikaty's full architecture, with the parts I built highlighted. Click a node for what it does.</p>
-        </div>
-        <div class="legend">
-          <span class="l-built"><i></i>Built by me</span>
-          <span class="l-support"><i></i>Backend context</span>
-        </div>
-      </div>
-
-      <div class="diagram-row" id="diagramRow">
-        <button class="node built" data-detail="The client: Next.js pages and components, React Query for data fetching, Tailwind for styling. Everything the user actually sees and clicks.">
-          <span class="n-label">01 · Client</span>
-          <span class="n-title">Next.js Frontend</span>
-        </button>
-        <button class="node built" data-detail="WebSocket clients feeding the inbox and active chat views, plus the dual-channel logic that keeps notifications and open conversations in sync.">
-          <span class="n-label">02 · Live</span>
-          <span class="n-title">Realtime UI Layer</span>
-        </button>
-        <button class="node" data-detail="Django Channels handles the WebSocket connections server-side and routes messages to the right channel group.">
-          <span class="n-label">03 · Server</span>
-          <span class="n-title">Django Channels</span>
-        </button>
-        <button class="node" data-detail="Django REST Framework serves gigs, orders, profiles, and auth — the API surface the frontend consumes.">
-          <span class="n-label">04 · Server</span>
-          <span class="n-title">Django REST API</span>
-        </button>
-        <button class="node built" data-detail="Stripe Elements and PayPal Checkout embedded in the client, driving the subscription and custom-offer checkout flows end to end.">
-          <span class="n-label">05 · Client</span>
-          <span class="n-title">Checkout UI</span>
-        </button>
-      </div>
-      <div class="diagram-detail" id="diagramDetail"><b>01·Client</b>The client: Next.js pages and components, React Query for data fetching, Tailwind for styling. Everything the user actually sees and clicks.</div>
+    <div style="background: #F4F1EA; padding: 22px 0 22px 24px;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8377;">Happiest doing</div>
+      <div style="font-size: 15.5px; margin-top: 5px;">Interfaces that touch real state</div>
     </div>
   </div>
-</section>
 
-<section class="case" id="work">
-  <div class="wrap">
-    <div class="case-top reveal">
+  <div id="work" style="padding: 84px 0 0;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8377; margin-bottom: 28px;">Selected work — 01</div>
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
       <div>
-        <div class="eyebrow">Featured work</div>
-        <h2>Sikaty</h2>
-        <div class="role-line">Freelance marketplace · UK-registered · Primary frontend developer</div>
+        <h2 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: clamp(34px, 4.6vw, 52px); line-height: 1.05; letter-spacing: -0.015em;">Sikaty</h2>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #6E675C; margin-top: 10px;">Freelance marketplace · UK-registered · 2023 → now</div>
       </div>
-      <span class="status-chip"><i></i>In production</span>
+      <span style="display: inline-flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #3F7A4C; background: #E9F2E9; border: 1px solid #CFE3D0; padding: 6px 13px; border-radius: 999px;"><span style="width: 6px; height: 6px; border-radius: 50%; background: #4E8A5B;"></span>In production</span>
     </div>
 
-    <p class="case-summary reveal">
-      Sikaty is a two-sided freelance marketplace — buyers post work, sellers deliver it, and the whole relationship runs through the platform: discovery, real-time messaging, orders, and payment. I built the <strong>entire client-side application</strong>, then wired it into a Django backend I also worked on — from the first Bootstrap-to-Next.js migration through to the subscription checkout flow live today.
-    </p>
+    <p style="font-size: 18px; color: #2C2A24; max-width: 70ch; margin: 30px 0 0; text-wrap: pretty;">Buyers post work, sellers deliver it, and the whole relationship runs through the platform: discovery, real-time messaging, orders, payment. I built the <strong style="font-weight: 600;">entire client-side application</strong> — from the first Bootstrap-to-Next.js migration through to the subscription checkout that's live today — and worked into the Django backend it talks to.</p>
 
-    <div class="feature-grid reveal">
-      <div class="feature">
-        <h4><i></i>Design system</h4>
-        <p>Custom typography, color, and motion language applied consistently across every page — landing, blog, category browsing, help center.</p>
+    <!-- <div style="margin-top: 40px; border-radius: 6px; overflow: hidden; border: 1px solid #E3DCCF; aspect-ratio: 16 / 9;">
+      <image-slot id="sikaty-hero" shape="rect" placeholder="Drop a screenshot of Sikaty"></image-slot>
+    </div> -->
+
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 48px; margin-top: 54px;">
+      <div style="border-top: 1px solid #15140F; padding: 20px 0 22px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #0D9488;">01</div>
+        <h3 style="margin: 8px 0 6px; font-family: 'Work Sans', sans-serif; font-size: 16.5px; font-weight: 600;">Seller onboarding</h3>
+        <p style="margin: 0; font-size: 15px; color: #6E675C;">Multi-step profile wizard with per-step validation, unsaved-changes tracking, and a profile-strength score that updates as sellers type.</p>
       </div>
-      <div class="feature">
-        <h4><i></i>Seller onboarding</h4>
-        <p>Multi-step profile wizard with live validation, unsaved-changes tracking, and a profile-strength score that updates as sellers fill it in.</p>
+      <div style="border-top: 1px solid #15140F; padding: 20px 0 22px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #0D9488;">02</div>
+        <h3 style="margin: 8px 0 6px; font-family: 'Work Sans', sans-serif; font-size: 16.5px; font-weight: 600;">Real-time chat</h3>
+        <p style="margin: 0; font-size: 15px; color: #6E675C;">WebSocket inbox and conversation view on a dual-channel design — one channel for notifications, one for the open thread — plus a mobile bottom-sheet UI.</p>
       </div>
-      <div class="feature">
-        <h4><i></i>Real-time chat</h4>
-        <p>WebSocket-driven inbox and chat with a dual-channel design — one channel for notifications, one for the open conversation — plus mobile bottom-sheet UI.</p>
+      <div style="border-top: 1px solid #E3DCCF; padding: 20px 0 22px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #0D9488;">03</div>
+        <h3 style="margin: 8px 0 6px; font-family: 'Work Sans', sans-serif; font-size: 16.5px; font-weight: 600;">Checkout &amp; subscriptions</h3>
+        <p style="margin: 0; font-size: 15px; color: #6E675C;">Stripe Elements and PayPal in a session-based flow, covering both one-off custom offers and recurring plans.</p>
       </div>
-      <div class="feature">
-        <h4><i></i>Order management</h4>
-        <p>Migrated the full order flow off Bootstrap: feed, details, requirements, and deliveries, each rendered differently for buyer vs. seller.</p>
+      <div style="border-top: 1px solid #E3DCCF; padding: 20px 0 22px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #0D9488;">04</div>
+        <h3 style="margin: 8px 0 6px; font-family: 'Work Sans', sans-serif; font-size: 16.5px; font-weight: 600;">Order management</h3>
+        <p style="margin: 0; font-size: 15px; color: #6E675C;">The full order flow migrated off Bootstrap: feed, details, requirements, deliveries — each rendered differently for buyer and seller.</p>
       </div>
-      <div class="feature">
-        <h4><i></i>Checkout &amp; subscriptions</h4>
-        <p>Stripe Elements and PayPal wired into a session-based checkout, covering both one-off custom offers and recurring subscription plans.</p>
+      <div style="border-top: 1px solid #E3DCCF; padding: 20px 0 22px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #0D9488;">05</div>
+        <h3 style="margin: 8px 0 6px; font-family: 'Work Sans', sans-serif; font-size: 16.5px; font-weight: 600;">Search &amp; discovery</h3>
+        <p style="margin: 0; font-size: 15px; color: #6E675C;">Paginated gig grid with bookmarking and autocomplete, backed by a word-tokenized Django search endpoint.</p>
       </div>
-      <div class="feature">
-        <h4><i></i>Search &amp; discovery</h4>
-        <p>Paginated gig grid with bookmarking and autocomplete search, backed by a word-tokenized Django search endpoint.</p>
+      <div style="border-top: 1px solid #E3DCCF; padding: 20px 0 22px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #0D9488;">06</div>
+        <h3 style="margin: 8px 0 6px; font-family: 'Work Sans', sans-serif; font-size: 16.5px; font-weight: 600;">The design system</h3>
+        <p style="margin: 0; font-size: 15px; color: #6E675C;">One typography, color and motion language applied across landing, blog, category browsing and help center.</p>
       </div>
     </div>
 
-    <div class="pill-row reveal">
-      <span class="pill">Next.js</span>
-      <span class="pill">TypeScript</span>
-      <span class="pill">Tailwind CSS</span>
-      <span class="pill">React Query</span>
-      <span class="pill">WebSockets</span>
-      <span class="pill">Stripe</span>
-      <span class="pill">PayPal</span>
-      <span class="pill">Django REST</span>
-      <span class="pill">Django Channels</span>
-    </div>
-
-    <div class="case-links reveal">
-      <a class="btn btn-ghost" href="#"><!-- link live site --> Live site ↗</a>
-      <a class="btn btn-ghost" href="#"><!-- link repo --> Source ↗</a>
-    </div>
-
-    <div class="more-projects reveal">
-      <h3>More projects</h3>
-      <div class="placeholder-grid">
-        <div class="placeholder-card">
-          <span>Coming soon</span>
-          Space reserved for the next case study.
+    <div style="margin-top: 46px; padding: 30px 32px; background: #FFFDF8; border: 1px solid #E3DCCF; border-radius: 6px;">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+        <div>
+          <h3 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: 25px; letter-spacing: -0.01em;">Where my work sat in the system</h3>
+          <p style="margin: 7px 0 0; font-size: 14.5px; color: #6E675C; max-width: 48ch;">Click a piece to see what it did. Terracotta is mine end to end.</p>
         </div>
-        <div class="placeholder-card">
-          <span>Coming soon</span>
-          Space reserved for the next case study.
+        <div style="display: flex; gap: 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #8A8377;">
+          <span style="display: flex; align-items: center; gap: 6px;"><i style="width: 10px; height: 10px; border-radius: 2px; background: #0D9488; display: inline-block;"></i>Built by me</span>
+          <span style="display: flex; align-items: center; gap: 6px;"><i style="width: 10px; height: 10px; border-radius: 2px; background: #E3DCCF; display: inline-block;"></i>Backend context</span>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<section class="about" id="about">
-  <div class="wrap about-grid">
-    <div class="reveal">
-      <div class="about-photo"><!-- swap for a real photo --> Your photo here</div>
-    </div>
-    <div class="reveal">
-      <div class="eyebrow">About</div>
-      <div class="about-text">
-        <p>I'm a frontend developer who's spent the last stretch building one product end to end rather than a portfolio of small demos — which means I've had to own the parts that don't show up in a component library: state that has to survive a page refresh, checkout flows that can't silently fail, chat that has to stay in sync across two WebSocket channels.</p>
-        <p>I like working close to the backend, not because I want to be a backend developer, but because the best frontend decisions come from understanding what the API can and can't promise you.</p>
+      <div style="display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap;">
+        <button type="button" onClick="{{ pick0 }}" style="flex: 1 1 160px; text-align: left; cursor: pointer; font-family: 'Work Sans', sans-serif; background: #FFFDF8; border: 1px solid #E3DCCF; border-radius: 5px; padding: 14px; outline: 2px solid {{ ring0 }}; outline-offset: -1px;" style-hover="border-color: #0D9488;">
+          <span style="display: block; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #0D9488;">01 · Client</span>
+          <span style="display: block; font-size: 14.5px; font-weight: 600; margin-top: 6px;">Next.js frontend</span>
+        </button>
+        <button type="button" onClick="{{ pick1 }}" style="flex: 1 1 160px; text-align: left; cursor: pointer; font-family: 'Work Sans', sans-serif; background: #FFFDF8; border: 1px solid #E3DCCF; border-radius: 5px; padding: 14px; outline: 2px solid {{ ring1 }}; outline-offset: -1px;" style-hover="border-color: #0D9488;">
+          <span style="display: block; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #0D9488;">02 · Live</span>
+          <span style="display: block; font-size: 14.5px; font-weight: 600; margin-top: 6px;">Realtime UI layer</span>
+        </button>
+        <button type="button" onClick="{{ pick2 }}" style="flex: 1 1 160px; text-align: left; cursor: pointer; font-family: 'Work Sans', sans-serif; background: #F4F1EA; border: 1px solid #E3DCCF; border-radius: 5px; padding: 14px; outline: 2px solid {{ ring2 }}; outline-offset: -1px;" style-hover="border-color: #C6BDAC;">
+          <span style="display: block; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #8A8377;">03 · Server</span>
+          <span style="display: block; font-size: 14.5px; font-weight: 600; margin-top: 6px;">Django Channels</span>
+        </button>
+        <button type="button" onClick="{{ pick3 }}" style="flex: 1 1 160px; text-align: left; cursor: pointer; font-family: 'Work Sans', sans-serif; background: #F4F1EA; border: 1px solid #E3DCCF; border-radius: 5px; padding: 14px; outline: 2px solid {{ ring3 }}; outline-offset: -1px;" style-hover="border-color: #C6BDAC;">
+          <span style="display: block; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #8A8377;">04 · Server</span>
+          <span style="display: block; font-size: 14.5px; font-weight: 600; margin-top: 6px;">Django REST API</span>
+        </button>
+        <button type="button" onClick="{{ pick4 }}" style="flex: 1 1 160px; text-align: left; cursor: pointer; font-family: 'Work Sans', sans-serif; background: #FFFDF8; border: 1px solid #E3DCCF; border-radius: 5px; padding: 14px; outline: 2px solid {{ ring4 }}; outline-offset: -1px;" style-hover="border-color: #0D9488;">
+          <span style="display: block; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #0D9488;">05 · Client</span>
+          <span style="display: block; font-size: 14.5px; font-weight: 600; margin-top: 6px;">Checkout UI</span>
+        </button>
       </div>
-      <div class="about-facts">
-        <div class="fact"><div class="k">Focus</div><div class="v">Next.js · TypeScript · Tailwind</div></div>
-        <div class="fact"><div class="k">Comfortable with</div><div class="v">Django REST · WebSockets</div></div>
-        <div class="fact"><div class="k">Currently</div><div class="v">Open to frontend roles</div></div>
-        <div class="fact"><div class="k">Based in</div><div class="v"><!-- fill in --> Your location</div></div>
+      <p style="margin: 20px 0 0; font-size: 15px; color: #2C2A24; min-height: 48px;">{{ detail }}</p>
+    </div>
+
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px;">
+      <a href="#" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 11px 18px; border-radius: 999px; border: 1px solid #D6CEBF; color: #15140F;" style-hover="border-color: #15140F;">Live site ↗</a>
+      <a href="#" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 11px 18px; border-radius: 999px; border: 1px solid #D6CEBF; color: #15140F;" style-hover="border-color: #15140F;">Source ↗</a>
+    </div>
+
+    <div style="margin-top: 56px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+      <div style="border: 1px dashed #D6CEBF; border-radius: 6px; padding: 28px; min-height: 130px; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8377;">02 — in progress</div>
+        <div style="font-size: 15px; color: #6E675C;">Next case study lands here.</div>
+      </div>
+      <div style="border: 1px dashed #D6CEBF; border-radius: 6px; padding: 28px; min-height: 130px; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8377;">03 — in progress</div>
+        <div style="font-size: 15px; color: #6E675C;">Space reserved.</div>
       </div>
     </div>
   </div>
-</section>
 
-<section class="contact" id="contact">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="eyebrow">Contact</div>
-      <h2>Let's talk about your frontend</h2>
-      <p>Open to full-time and contract frontend roles. The fastest way to reach me is email.</p>
-    </div>
-    <div class="contact-actions reveal">
-      <a class="btn btn-primary" href="mailto:you@example.com">Email me</a>
-      <a class="btn btn-ghost" href="#" id="resumeLink2">Download résumé</a>
-    </div>
-    <div class="contact-links reveal">
-      <a href="#"><!-- GitHub --> GitHub</a>
-      <a href="#"><!-- LinkedIn --> LinkedIn</a>
+  <div id="toolkit" style="padding: 84px 0 0;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8377; margin-bottom: 26px;">Toolkit</div>
+    <h2 style="margin: 0 0 34px; font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: clamp(28px, 3.6vw, 40px); letter-spacing: -0.015em; max-width: 26ch;">What I've actually shipped with</h2>
+    <div style="display: flex; flex-direction: column;">
+      <div style="display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding: 22px 0; border-top: 1px solid #E3DCCF;">
+        <div>
+          <div style="font-size: 16px; font-weight: 600;">Frontend</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #0D9488; margin-top: 3px;">Core, daily</div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; background: #FFFDF8; border: 1px solid #E3DCCF; padding: 5px 11px; border-radius: 4px;">Next.js (App Router)</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; background: #FFFDF8; border: 1px solid #E3DCCF; padding: 5px 11px; border-radius: 4px;">TypeScript</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; background: #FFFDF8; border: 1px solid #E3DCCF; padding: 5px 11px; border-radius: 4px;">Tailwind CSS</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; background: #FFFDF8; border: 1px solid #E3DCCF; padding: 5px 11px; border-radius: 4px;">React Query</span>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding: 22px 0; border-top: 1px solid #E3DCCF;">
+        <div>
+          <div style="font-size: 16px; font-weight: 600;">Live features</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #0D9488; margin-top: 3px;">Real-time</div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; background: #FFFDF8; border: 1px solid #E3DCCF; padding: 5px 11px; border-radius: 4px;">WebSocket clients</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; background: #FFFDF8; border: 1px solid #E3DCCF; padding: 5px 11px; border-radius: 4px;">Django Channels</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; background: #FFFDF8; border: 1px solid #E3DCCF; padding: 5px 11px; border-radius: 4px;">Dual-channel sync</span>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding: 22px 0; border-top: 1px solid #E3DCCF; border-bottom: 1px solid #E3DCCF;">
+        <div>
+          <div style="font-size: 16px; font-weight: 600;">Payments UI</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #0D9488; margin-top: 3px;">Commerce</div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; background: #FFFDF8; border: 1px solid #E3DCCF; padding: 5px 11px; border-radius: 4px;">Stripe Elements</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; background: #FFFDF8; border: 1px solid #E3DCCF; padding: 5px 11px; border-radius: 4px;">PayPal Checkout</span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; background: #FFFDF8; border: 1px solid #E3DCCF; padding: 5px 11px; border-radius: 4px;">Session-based flows</span>
+        </div>
+      </div>
     </div>
   </div>
-</section>
 
-<footer>
-  <div class="wrap">© <span id="year"></span> Your Name. Built with Next.js in production — this page, plain HTML.</div>
-</footer>
+  <div id="about" style="padding: 84px 0 0; display: grid; grid-template-columns: 1fr 0.72fr; gap: 56px; align-items: start;">
+    <div>
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8377; margin-bottom: 26px;">About</div>
+      <p style="margin: 0 0 18px; font-family: 'Newsreader', Georgia, serif; font-size: 27px; line-height: 1.32; letter-spacing: -0.01em; text-wrap: pretty;">I'd rather go deep on one real product than wide on ten demos.</p>
+      <p style="margin: 0 0 16px; font-size: 16.5px; color: #2C2A24; text-wrap: pretty;">Building one thing end to end meant owning the parts that never show up in a component library: state that has to survive a page refresh, checkout flows that can't fail quietly, chat that stays in sync across two WebSocket channels.</p>
+      <p style="margin: 0; font-size: 16.5px; color: #2C2A24; text-wrap: pretty;">I like working close to the backend — not because I want to be a backend developer, but because the best frontend decisions come from knowing exactly what the API can and can't promise you.</p>
+    </div>
+    <div style="display: flex; flex-direction: column; border-top: 1px solid #15140F;">
+      <div style="padding: 16px 0; border-bottom: 1px solid #E3DCCF;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; color: #8A8377;">Focus</div>
+        <div style="font-size: 15px; margin-top: 3px;">Next.js · TypeScript · Tailwind</div>
+      </div>
+      <div style="padding: 16px 0; border-bottom: 1px solid #E3DCCF;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; color: #8A8377;">Comfortable with</div>
+        <div style="font-size: 15px; margin-top: 3px;">Django REST · WebSockets</div>
+      </div>
+      <div style="padding: 16px 0; border-bottom: 1px solid #E3DCCF;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; color: #8A8377;">Currently</div>
+        <div style="font-size: 15px; margin-top: 3px;">Open to frontend roles</div>
+      </div>
+      <div style="padding: 16px 0; border-bottom: 1px solid #E3DCCF;">
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; color: #8A8377;">Off-screen</div>
+        <div style="font-size: 15px; margin-top: 3px;">Long walks, longer changelogs</div>
+      </div>
+    </div>
+  </div>
 
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+  <div id="contact" style="padding: 96px 0 40px;">
+    <div style="border-top: 1px solid #15140F; padding-top: 40px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end;">
+      <div>
+        <h2 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: clamp(32px, 5vw, 54px); line-height: 1.06; letter-spacing: -0.015em;">Got something that needs a frontend?</h2>
+        <a href="mailto:you@example.com" style="display: inline-block; margin-top: 20px; font-family: 'IBM Plex Mono', monospace; font-size: clamp(16px, 2vw, 21px); border-bottom: 1px solid #99F6E4; padding-bottom: 3px;">you@example.com</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 13.5px;">
+        <a href="#" style="color: #6E675C;">GitHub ↗</a>
+        <a href="#" style="color: #6E675C;">LinkedIn ↗</a>
+        <a href="#" style="color: #6E675C;">Résumé ↗</a>
+      </div>
+    </div>
+    <div style="margin-top: 56px; padding-top: 20px; border-top: 1px solid #E3DCCF; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #8A8377;">
+      <span>© {{ year }} Marben Taguinod</span>
+      <span>Built by hand — plain HTML, no framework needed for one page</span>
+    </div>
+  </div>
 
-  // mobile nav toggle
-  var toggle = document.getElementById('navToggle');
-  var links = document.getElementById('navLinks');
-  toggle.addEventListener('click', function(){
-    links.classList.toggle('open');
-  });
-  links.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click', function(){ links.classList.remove('open'); });
-  });
-
-  // architecture diagram interaction
-  var nodes = document.querySelectorAll('.node');
-  var detail = document.getElementById('diagramDetail');
-  nodes.forEach(function(node){
-    node.addEventListener('click', function(){
-      nodes.forEach(function(n){ n.classList.remove('active'); });
-      node.classList.add('active');
-      var label = node.querySelector('.n-label').textContent.replace(' · ', '·');
-      detail.innerHTML = '<b>' + label + '</b>' + node.getAttribute('data-detail');
-    });
-  });
-  if(nodes.length){ nodes[0].classList.add('active'); }
-
-  // scroll reveal
-  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var revealEls = document.querySelectorAll('.reveal');
-  if(prefersReduced || !('IntersectionObserver' in window)){
-    revealEls.forEach(function(el){ el.classList.add('visible'); });
-  } else {
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    revealEls.forEach(function(el){ io.observe(el); });
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { active: 0 };
+  details = [
+    "The client: Next.js pages and components, React Query for data, Tailwind for styling. Everything the user actually sees and clicks.",
+    "WebSocket clients feeding the inbox and active conversation, plus the dual-channel logic that keeps notifications and open threads in sync.",
+    "Django Channels holds the WebSocket connections server-side and routes each message to the right channel group.",
+    "Django REST Framework serves gigs, orders, profiles and auth — the API surface the frontend consumes.",
+    "Stripe Elements and PayPal Checkout embedded in the client, driving subscription and custom-offer checkout end to end."
+  ];
+  renderVals() {
+    const a = this.state.active;
+    const ring = i => (a === i ? "#15140F" : "transparent");
+    const pick = i => () => this.setState({ active: i });
+    return {
+      year: new Date().getFullYear(),
+      detail: this.details[a],
+      pick0: pick(0), pick1: pick(1), pick2: pick(2), pick3: pick(3), pick4: pick(4),
+      ring0: ring(0), ring1: ring(1), ring2: ring(2), ring3: ring(3), ring4: ring(4)
+    };
   }
+}
 </script>
-
 </body>
 </html>
