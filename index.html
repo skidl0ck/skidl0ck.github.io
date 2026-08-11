@@ -45,12 +45,12 @@
       <p style="margin: 26px 0 0; font-size: 18.5px; color: #57524A; max-width: 54ch; text-wrap: pretty;">Next.js, TypeScript and Tailwind, wired into real backends — real-time chat, checkout that can't silently fail, multi-step wizards that survive a refresh. Not demos: one marketplace, live, with paying users.</p>
       <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px;">
         <a href="#work" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 12px 20px; border-radius: 999px; background: #15140F; color: #F4F1EA;" style-hover="background: #0D9488;">Read the case study</a>
-        <a href="#" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 12px 20px; border-radius: 999px; border: 1px solid #D6CEBF; color: #15140F;" style-hover="border-color: #15140F;">Résumé (PDF)</a>
+        <a href="docs/Marben_Taguinod_Resume.pdf" download target="_blank" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 12px 20px; border-radius: 999px; border: 1px solid #D6CEBF; color: #15140F;" style-hover="border-color: #15140F;">Résumé (PDF)</a>
       </div>
     </div>
     <div>
       <div style="aspect-ratio: 4 / 5; border-radius: 4px; overflow: hidden; border: 1px solid #E3DCCF;">
-        <image-slot id="portrait" shape="rect" source="/images/portrait.jpg"></image-slot>
+        <img src="./images/portrait.png" alt="Portrait of Marben Taguinod" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
       </div>
       <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #8A8377; margin-top: 10px; line-height: 1.5;">Manila, PH · works remote<br />Replies within a day</div>
     </div>
@@ -157,11 +157,11 @@
     </div>
 
     <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px;">
-      <a href="#" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 11px 18px; border-radius: 999px; border: 1px solid #D6CEBF; color: #15140F;" style-hover="border-color: #15140F;">Live site ↗</a>
-      <a href="#" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 11px 18px; border-radius: 999px; border: 1px solid #D6CEBF; color: #15140F;" style-hover="border-color: #15140F;">Source ↗</a>
+      <a href="https://www.sikaty.com" target="_blank" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 11px 18px; border-radius: 999px; border: 1px solid #D6CEBF; color: #15140F;" style-hover="border-color: #15140F;">Live site ↗</a>
+      <!-- <a href="#" style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 11px 18px; border-radius: 999px; border: 1px solid #D6CEBF; color: #15140F;" style-hover="border-color: #15140F;">Source ↗</a> -->
     </div>
 
-    <div style="margin-top: 56px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+    <!-- <div style="margin-top: 56px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
       <div style="border: 1px dashed #D6CEBF; border-radius: 6px; padding: 28px; min-height: 130px; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px;">
         <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8377;">02 — in progress</div>
         <div style="font-size: 15px; color: #6E675C;">Next case study lands here.</div>
@@ -170,7 +170,7 @@
         <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8377;">03 — in progress</div>
         <div style="font-size: 15px; color: #6E675C;">Space reserved.</div>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div id="toolkit" style="padding: 84px 0 0;">
@@ -234,10 +234,10 @@
         <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; color: #8A8377;">Currently</div>
         <div style="font-size: 15px; margin-top: 3px;">Open to frontend roles</div>
       </div>
-      <div style="padding: 16px 0; border-bottom: 1px solid #E3DCCF;">
+      <!-- <div style="padding: 16px 0; border-bottom: 1px solid #E3DCCF;">
         <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; color: #8A8377;">Off-screen</div>
         <div style="font-size: 15px; margin-top: 3px;">Long walks, longer changelogs</div>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -245,17 +245,20 @@
     <div style="border-top: 1px solid #15140F; padding-top: 40px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end;">
       <div>
         <h2 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: clamp(32px, 5vw, 54px); line-height: 1.06; letter-spacing: -0.015em;">Got something that needs a frontend?</h2>
-        <a href="mailto:you@example.com" style="display: inline-block; margin-top: 20px; font-family: 'IBM Plex Mono', monospace; font-size: clamp(16px, 2vw, 21px); border-bottom: 1px solid #99F6E4; padding-bottom: 3px;">you@example.com</a>
+        <div style="margin-top: 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <a href="mailto:you@example.com" style="display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: clamp(16px, 2vw, 21px); border-bottom: 1px solid #99F6E4; padding-bottom: 3px;">marben.taguinod@gmail.com</a>
+          <button id="copy-email-button" type="button" onclick="copyEmail()" style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; line-height: 1; color: #15140F; background: transparent; border: 1px solid #15140F; padding: 7px 12px; border-radius: 999px; cursor: pointer; transition: all 180ms ease;">Copy</button>
+        </div>
       </div>
       <div style="display: flex; flex-direction: column; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 13.5px;">
-        <a href="#" style="color: #6E675C;">GitHub ↗</a>
-        <a href="#" style="color: #6E675C;">LinkedIn ↗</a>
-        <a href="#" style="color: #6E675C;">Résumé ↗</a>
+        <a href="https://github.com/skidl0ck" target="_blank" style="color: #6E675C;">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/marben-taguinod-b5b083424" target="_blank" style="color: #6E675C;">LinkedIn ↗</a>
+        <a href="docs/Marben_Taguinod_Resume.pdf" target="_blank" download style="color: #6E675C;">Résumé ↗</a>
       </div>
     </div>
     <div style="margin-top: 56px; padding-top: 20px; border-top: 1px solid #E3DCCF; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #8A8377;">
       <span>© {{ year }} Marben Taguinod</span>
-      <span>Built by hand — plain HTML, no framework needed for one page</span>
+      <!-- <span>Built by hand — plain HTML, no framework needed for one page</span> -->
     </div>
   </div>
 
@@ -283,6 +286,48 @@ class Component extends DCLogic {
     };
   }
 }
+</script>
+<script>
+  function fallbackCopyEmail(email, button) {
+    const textarea = document.createElement('textarea');
+    textarea.value = email;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    const success = document.execCommand('copy');
+    document.body.removeChild(textarea);
+
+    if (success && button) {
+      const previousText = button.textContent;
+      button.textContent = 'Copied';
+      setTimeout(() => {
+        button.textContent = previousText;
+      }, 1600);
+    }
+  }
+
+  function copyEmail() {
+    const email = 'marben.taguinod@gmail.com';
+    const button = document.getElementById('copy-email-button');
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(email)
+        .then(() => {
+          if (button) {
+            const previousText = button.textContent;
+            button.textContent = 'Copied';
+            setTimeout(() => {
+              button.textContent = previousText;
+            }, 1600);
+          }
+        })
+        .catch(() => fallbackCopyEmail(email, button));
+    } else {
+      fallbackCopyEmail(email, button);
+    }
+  }
 </script>
 </body>
 </html>
